@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, message, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getAuth } from "firebase/auth"; 
-import { firebaseConfig } from "../../../firebaseConfig"; 
+import axios from "axios"; // Import Axios
+import { firebaseConfig } from "../../../firebaseConfig"; // Import Firebase configuration
 
 const { Title } = Typography;
 
@@ -22,25 +21,26 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  
-  const auth = getAuth();
-
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
+      // Make a POST request to the Firebase API for login
+      const response = await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`,
+        {
+          email: values.email,
+          password: values.password,
+          returnSecureToken: true,
+        }
       );
 
+      // If login is successful, response will contain user data
       message.success("Login successful!");
-      console.log("Logged in user:", userCredential.user);
-      navigate("/LoginManager"); 
+      console.log("Logged in user:", response.data);
+      navigate("/LoginManager"); // Redirect to the LoginManager page
     } catch (error) {
       console.error("Login error:", error);
-      message.error("Failed to login. Please check your email and password.");
+      message.error("Login failed. Please check your email and password.");
     } finally {
       setLoading(false);
     }

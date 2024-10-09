@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, message, Select, Spin } from "antd";
 import axios from "axios";
-import { firebaseConfig } from "../../../firebaseConfig"; // Import firebaseConfig
+import { firebaseConfig } from "../../../firebaseConfig"; 
 import { useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // Import Firebase Authentication
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; 
 
 const { Title } = Typography;
 
@@ -22,25 +22,22 @@ const LoginAdd = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const auth = getAuth(); // Initialize Firebase Authentication
+  const auth = getAuth(); 
 
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      // Tạo người dùng mới trong Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         values.email,
         values.password
       );
 
-      // Lấy UID của người dùng đã tạo
       const userUID = userCredential.user.uid;
 
-      // Thêm thông tin người dùng vào Realtime Database
       await axios.post(`${firebaseConfig.databaseURL}/account.json`, {
         ...values,
-        userId: userUID // Thêm UID vào dữ liệu
+        userId: userUID 
       });
 
       message.success("User added successfully!");
@@ -127,7 +124,10 @@ const LoginAdd = () => {
         >
           <Select placeholder="Select a Role">
             <Select.Option value="admin">Admin</Select.Option>
-            <Select.Option value="user">User</Select.Option>
+            <Select.Option value="teacher">Teacher</Select.Option>
+            <Select.Option value="student">Student</Select.Option>
+            <Select.Option value="supervisor">Supervisor</Select.Option>
+            <Select.Option value="guest">Guest</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
