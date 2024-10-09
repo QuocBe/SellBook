@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database"; // Import các hàm cần thiết
-import { auth } from "../../../firebaseConfig"; // Import cấu hình Firebase
-import { Table, Spin } from "antd"; // Sử dụng Ant Design Table để hiển thị dữ liệu
+import axios from "axios"; // Import Axios
+import { firebaseConfig } from "../../../firebaseConfig"; // Import Firebase configuration
+import { Table, Spin, Button, message } from "antd"; 
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { auth } from "../../../firebaseConfig"; 
 
 const LoginManager = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // Hook to access navigate
 
-  // Fetch data từ Realtime Database
-  const fetchData = () => {
-    const database = getDatabase(); // Khởi tạo đối tượng database
-    const usersRef = ref(database, 'account'); // Lấy tham chiếu tới 'account'
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${firebaseConfig.databaseURL}/account.json`);
+      const data = response.data;
 
-    // Sử dụng onValue để lấy dữ liệu
-    onValue(usersRef, (snapshot) => {
-      const data = snapshot.val();
       if (data) {
-        // Chuyển đổi dữ liệu từ object sang array
         const userList = Object.entries(data).map(([key, value]) => ({
           id: key,
           username: value.username,
@@ -24,22 +23,37 @@ const LoginManager = () => {
           role: value.role,
           department: value.department,
         }));
-        setUsers(userList); // Cập nhật state với danh sách người dùng
+        setUsers(userList); 
       } else {
         setUsers([]);
       }
-      setLoading(false); // Đặt loading thành false khi dữ liệu đã được lấy
-    }, (error) => {
+    } catch (error) {
       console.error("Error fetching data: ", error);
-      setLoading(false);
-    });
+      message.error("Failed to load users.");
+    } finally {
+      setLoading(false); 
+    }
   };
 
   useEffect(() => {
-    fetchData(); // Gọi hàm fetchData khi component được mount
+    fetchData(); 
   }, []);
 
-  // Cấu hình cột cho Table
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        console.log("User signed out");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+  };
+
+  const handleAddAccount = () => {
+    navigate("/loginadd"); // Redirect to the /loginadd page
+  };
+
   const columns = [
     {
       title: 'Username',
@@ -65,14 +79,20 @@ const LoginManager = () => {
 
   return (
     <div>
-      <h1>User List</h1>
+      <h1>Account List</h1>
+      <Button type="primary" onClick={handleLogout} style={{ marginBottom: '16px', marginRight: '8px' }}>
+        Logout
+      </Button>
+      <Button type="primary" onClick={handleAddAccount} style={{ marginBottom: '16px' }}>
+        Add Account
+      </Button>
       {loading ? (
-        <Spin tip="Loading..."/>
+        <Spin tip="Loading..." />
       ) : (
         <Table 
           dataSource={users} 
           columns={columns} 
-          rowKey="id" // Sử dụng id làm khóa cho mỗi hàng
+          rowKey="id" 
         />
       )}
     </div>
