@@ -1,8 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
+import Sidebar from './Components/SidebarLeft';  // Đảm bảo đường dẫn đúng
 
 const Layout = () => {
     return (
         <>
+            <Sidebar role="admin" />  {/* Thêm Sidebar ở đây */}
             <nav>
                 <ul>
                     <li>

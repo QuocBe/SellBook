@@ -34,10 +34,40 @@ const Login = () => {
         }
       );
 
-      // If login is successful, response will contain user data
-      message.success("Login successful!");
+      // Check if the logged-in user exists and get their role
+      const userRoleResponse = await axios.get(`${firebaseConfig.databaseURL}/account.json`);
+      const userRoles = userRoleResponse.data;
+
+      const user = Object.values(userRoles).find(user => user.email === values.email);
+
+      if (user) {
+        message.success("Login successful!");
+        
+        // Navigate based on user role
+        switch (user.role) {
+          case 'admin':
+            navigate("/loginmanager"); // Redirect to LoginManager page
+            break;
+          case 'teacher':
+            navigate("/teacher-dashboard"); // Redirect to Teacher dashboard
+            break;
+          case 'student':
+            navigate("/student-dashboard"); // Redirect to Student dashboard
+            break;
+          case 'supervisor':
+            navigate("/supervisor-dashboard"); // Redirect to Supervisor dashboard
+            break;
+          case 'guest':
+            navigate("/guest-dashboard"); // Redirect to Guest dashboard
+            break;
+          default:
+            navigate("/user-dashboard"); // Redirect to a default user dashboard
+        }
+      } else {
+        message.error("User not found. Please check your email.");
+      }
+
       console.log("Logged in user:", response.data);
-      navigate("/LoginManager"); // Redirect to the LoginManager page
     } catch (error) {
       console.error("Login error:", error);
       message.error("Login failed. Please check your email and password.");
