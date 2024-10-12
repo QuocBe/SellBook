@@ -5,14 +5,12 @@ import { Button } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import "../assets/style/Pages/LogoutButton.scss";
 
-
-// eslint-disable-next-line react/prop-types
 function LogoutButton({ collapsed }) {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
   const handleLogout = () => {
-    localStorage.removeItem("userId");
-    navigate("/login");
+    localStorage.removeItem("userId"); // Xóa dữ liệu đăng nhập
+    navigate("/login"); // Điều hướng đến trang đăng nhập
   };
 
   return (
@@ -22,7 +20,7 @@ function LogoutButton({ collapsed }) {
       icon={<LogoutOutlined />}
       onClick={handleLogout}
     >
-      {!collapsed && t("LogOut")}
+      {!collapsed && "Log Out"}
     </Button>
   );
 }

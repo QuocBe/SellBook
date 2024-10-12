@@ -19,101 +19,65 @@ const { Sider } = Layout;
 
 const SidebarLeft = ({ role }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const { t } = useTranslation();
 
   const adminMenuItems = [
     {
       key: "1",
       icon: <UserOutlined />,
-      label: <NavLink to="/account-management">{t("ManageAccounts")}</NavLink>,
+      label: <NavLink to="/account-management">Manage Accounts</NavLink>,
       children: [
         {
           key: "1-1",
-          label: <NavLink to="/account-info">{t("AccountInfo")}</NavLink>,
+          label: <NavLink to="/LoginManager">Account Info</NavLink>,
         },
         {
           key: "1-2",
-          label: <NavLink to="/change-password">{t("changePassword")}</NavLink>,
+          label: <NavLink to="/change-password">Change Password</NavLink>,
         },
       ],
     },
     {
       key: "2",
       icon: <TeamOutlined />,
-      label: <NavLink to="/employee-management">{t("employee")}</NavLink>,
+      label: <NavLink to="/employee-management">Employee Management</NavLink>,
     },
     {
       key: "3",
       icon: <ProjectOutlined />,
-      label: <NavLink to="/project-management">{t("ProjectManagement")}</NavLink>,
+      label: <NavLink to="/project-management">Project Management</NavLink>,
       children: [
         {
           key: "3-1",
-          label: <NavLink to="/new-project">{t("NewProject")}</NavLink>,
+          label: <NavLink to="/new-project">New Project</NavLink>,
         },
         {
           key: "3-2",
-          label: <NavLink to="/project-tracking">{t("ProjectTracking")}</NavLink>,
+          label: <NavLink to="/project-tracking">Project Tracking</NavLink>,
         },
       ],
     },
     {
       key: "4",
       icon: <TeamOutlined />,
-      label: <NavLink to="/position-management">{t("PositionManagement")}</NavLink>,
+      label: <NavLink to="/supervisor-dashboard">Supervisor</NavLink>, // Cập nhật đường dẫn
     },
     {
       key: "5",
       icon: <ToolOutlined />,
-      label: (
-        <NavLink to="/technology-management">{t("TechnologyManagement")}</NavLink>
-      ),
+      label: <NavLink to="/teacher-dashboard">Teacher</NavLink>, // Cập nhật đường dẫn
     },
     {
       key: "6",
       icon: <CodeOutlined />,
-      label: <NavLink to="/programing-language">{t("ProgrammingLanguageManagement")}</NavLink>,
-    },
-    {
-      key: "7",
-      label: <LanguageSwitcher collapsed={collapsed} />,
+      label: <NavLink to="/student-dashboard">Student</NavLink>, // Cập nhật đường dẫn
     },
     {
       key: "8",
       label: <LogoutButton collapsed={collapsed} />,
     },
   ];
-
-  const employeeMenuItems = [
-    {
-      key: "1",
-      icon: <UserOutlined />,
-      label: <NavLink to="/employee">{t("EmployeeAccount")}</NavLink>,
-      children: [
-        {
-          key: "1-1",
-          label: <NavLink to="/account-info">{t("AccountInfo")}</NavLink>,
-        },
-        {
-          key: "1-2",
-          label: <NavLink to="/change-password">{t("changePassword")}</NavLink>,
-        },
-      ],
-    },
-    {
-      key: "3",
-      icon: <ProjectOutlined />,
-      label: <NavLink to="/employee-ProjectManagement">{t("ListProject")}</NavLink>,
-    },
-    {
-      key: "4",
-      label: <LanguageSwitcher collapsed={collapsed} />,
-    },
-    {
-      key: "5",
-      label: <LogoutButton collapsed={collapsed} />,
-    },
-  ];
+  
+ 
 
   return (
     <Sider
