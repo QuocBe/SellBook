@@ -12,6 +12,9 @@ import SupervisorDashboard from './Components/Supervisor/SupervisorDashboard';
 import GuestDashboard from './Components/Guest/GuestDashboard';
 import PageNotFound from './Components/PageNotFound/PageNotFound';
 import SidebarLeft from './Components/SidebarLeft';
+import Subject from './Components/Teacher/Subject';
+import NewSubject from './Components/Teacher/NewSubject';
+
 
 function App() {
   return (
@@ -31,6 +34,8 @@ function App() {
           <Route path="student-dashboard" element={<StudentDashboard />} />
           <Route path="supervisor-dashboard" element={<SupervisorDashboard />} />
           <Route path="guest-dashboard" element={<GuestDashboard />} />
+          <Route path="subject" element={<Subject />} />
+          <Route path="new-subject" element={<NewSubject />} />
           {/* Xử lý trang không tìm thấy */}
           <Route path="*" element={<PageNotFound />} />
         </Route>
