@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { fetchAllSubjects } from "../../service/Subject"; // Import hàm lấy danh sách môn học
+import { fetchAllSubjects } from "../../service/firestoreService"; // Import hàm lấy danh sách môn học
 
 const Subject = () => {
   const [subjects, setSubjects] = useState([]);

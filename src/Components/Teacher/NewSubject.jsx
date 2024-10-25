@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import { createSubject } from "../../service/Subject"; // Import hàm tạo môn học
+import { createSubject } from "../../service/firestoreService"; // Import hàm tạo môn học
 
 const { TextArea } = Input;
 

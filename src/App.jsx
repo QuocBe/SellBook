@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from './Layout';
+import Header from './Components/Header/Header';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import LoginAdd from './Components/Login/LoginAdd';
@@ -25,6 +26,7 @@ function App() {
 
         {/* Route cho các trang khác sẽ bao gồm Layout */}
         <Route path="/" element={<Layout />}>
+        <Route path="Header" element={<Header />} />
           <Route index element={<Home />} />
           <Route path="loginadd" element={<LoginAdd />} />
           <Route path="loginmanager" element={<LoginManager />} />
