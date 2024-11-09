@@ -1,18 +1,18 @@
-// src/firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // Sử dụng Firestore
-import { getDatabase } from "firebase/database";   // Sử dụng Realtime Database
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-auth-domain",
-  projectId: "your-project-id",
-  storageBucket: "your-storage-bucket",
-  messagingSenderId: "your-messaging-sender-id",
-  appId: "your-app-id",
-  databaseURL: "your-database-url"
+  apiKey: "API_KEY",
+  authDomain: "PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://PROJECT_ID-default-rtdb.firebaseio.com",
+  projectId: "PROJECT_ID",
+  storageBucket: "PROJECT_ID.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID",
+  measurementId: "MEASUREMENT_ID"
 };
 
 const app = initializeApp(firebaseConfig);
-export const firestore = getFirestore(app);
-export const database = getDatabase(app);
+const database = getDatabase(app);
+
+export { app, database };

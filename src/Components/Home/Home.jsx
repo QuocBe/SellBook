@@ -1,5 +1,4 @@
 import React from 'react';
-import './Header.scss'; // Kết nối SCSS cho header
 
 const Header = () => {
   return (
@@ -11,10 +10,7 @@ const Header = () => {
         <nav className="nav">
           <ul className="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#about">About us</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#contact">Contact us</a></li>
+            
           </ul>
         </nav>
         <div className="cart">

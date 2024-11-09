@@ -1,22 +1,24 @@
-// src/service/realtimeDatabaseService.js
-import { database } from '../firebaseConfig';
-import { ref, set } from "firebase/database";
+import { database } from '../../firebaseConfig';
+import { ref, get, child } from "firebase/database";
 
-// Hàm thêm dữ liệu vào Realtime Database
-const addBookToRealtimeDatabase = async (book) => {
-  const bookRef = ref(database, 'books/' + book.id);
+// Hàm kiểm tra thông tin đăng nhập của người dùng
+const checkUserCredentials = async (email, password) => {
+  const dbRef = ref(database);
   try {
-    await set(bookRef, book);
-    console.log("Book added to Realtime Database");
-  } catch (e) {
-    console.error("Error adding book: ", e);
+    const snapshot = await get(child(dbRef, 'users'));
+    if (snapshot.exists()) {
+      const users = snapshot.val();
+      for (let key in users) {
+        if (users[key].email === email && users[key].password === password) {
+          return users[key].role; // Trả về vai trò của người dùng (admin hoặc user)
+        }
+      }
+    }
+    return null; // Không tìm thấy tài khoản phù hợp
+  } catch (error) {
+    console.error("Error checking user credentials: ", error);
+    return null;
   }
 };
 
-// Ví dụ sử dụng hàm để thêm sách mới
-addBookToRealtimeDatabase({
-  id: "book1", // Sử dụng id để quản lý
-  title: "New Book",
-  author: "John Doe",
-  price: 19.99
-});
+export { checkUserCredentials };

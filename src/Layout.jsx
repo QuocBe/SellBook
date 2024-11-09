@@ -1,16 +1,21 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from './Components/SidebarLeft';  // Đảm bảo đường dẫn đúng
-import './App.css';  // Đảm bảo rằng bạn đã liên kết với file CSS
-
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+import HeroSection from './Components/Home/HeroSection'; // Import HeroSection
+import ExploreLibrary from './Components/Home/ExploreLibrary';
 const Layout = () => {
-    return (
-        <div className="container">  {/* Sử dụng class container để bố trí flexbox */}
-            <Sidebar role="admin" />  {/* Thêm Sidebar ở đây */}
-            <div className="main-content">  {/* Đây là phần nội dung chính */}
-                <Outlet />  {/* Render các thành phần khác ở đây */}
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <Header />
+      <HeroSection /> {/* Phần Hero Section ở trên */}
+      <ExploreLibrary /> {/* Thêm ExploreLibrary dưới HeroSection */}
+      <main>
+        <Outlet /> {/* This will render the nested routes */}
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default Layout;

@@ -1,21 +1,24 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Import các component cần thiết
 import Layout from './Layout';
-import Header from './Components/Header/Header';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import LoginAdd from './Components/Login/LoginAdd';
-import LoginManager from './Components/Login/LoginManager';
-import TeacherDashboard from './Components/Teacher/TeacherDashboard';
-import StudentDashboard from './Components/Student/StudentDashboard';
-import SupervisorDashboard from './Components/Supervisor/SupervisorDashboard';
-import GuestDashboard from './Components/Guest/GuestDashboard';
-import PageNotFound from './Components/PageNotFound/PageNotFound';
-import SidebarLeft from './Components/SidebarLeft';
-import Subject from './Components/Teacher/Subject';
-import NewSubject from './Components/Teacher/NewSubject';
+import AdminDashboard from './Components/Admin/AdminDashboard'; // Thêm AdminDashboard vào đây
 
+import BookList from './Components/Book/BookList';
+import BookDetails from './Components/Book/BookDetails';
+import Cart from './Components/Cart/CartList';
+import Checkout from './Components/Cart/Checkout';
+import AboutSection from './Components/Home/AboutSection';
+import ExploreLibrary from './Components/Home/ExploreLibrary';
+import PackagesSection from './Components/Home/PackagesSection';
+import EventsSection from './Components/Home/EventsSection';
+import LatestNewsSection from './Components/Home/LatestNewsSection';
+import GallerySection from './Components/Home/GallerySection';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
@@ -23,23 +26,37 @@ function App() {
       <Routes>
         {/* Route cho trang đăng nhập không có layout */}
         <Route path="/login" element={<Login />} />
+        <Route path="/loginadd" element={<LoginAdd />} />
+        
+        {/* Route cho trang Admin */}
+        <Route path="/admin" element={<AdminDashboard />} />
 
         {/* Route cho các trang khác sẽ bao gồm Layout */}
         <Route path="/" element={<Layout />}>
-        <Route path="Header" element={<Header />} />
+          {/* Trang chính (Home) */}
           <Route index element={<Home />} />
-          <Route path="loginadd" element={<LoginAdd />} />
-          <Route path="loginmanager" element={<LoginManager />} />
-          {/* Dashboard cho các vai trò */}
-          <Route path="sidebarLeft" element={<SidebarLeft />} />
-          <Route path="teacher-dashboard" element={<TeacherDashboard />} />
-          <Route path="student-dashboard" element={<StudentDashboard />} />
-          <Route path="supervisor-dashboard" element={<SupervisorDashboard />} />
-          <Route path="guest-dashboard" element={<GuestDashboard />} />
-          <Route path="subject" element={<Subject />} />
-          <Route path="new-subject" element={<NewSubject />} />
+
+          {/* Các trang của phần Home */}
+          <Route path="about" element={<AboutSection />} />
+          <Route path="explore" element={<ExploreLibrary />} />
+          <Route path="packages" element={<PackagesSection />} />
+          <Route path="events" element={<EventsSection />} />
+          <Route path="latest-news" element={<LatestNewsSection />} />
+          <Route path="gallery" element={<GallerySection />} />
+
+          {/* Các trang liên quan đến sách */}
+          <Route path="books" element={<BookList />} />
+          <Route path="books/:bookId" element={<BookDetails />} />
+
+          {/* Giỏ hàng và thanh toán */}
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+
+          {/* Footer */}
+          <Route path="footer" element={<Footer />} />
+
           {/* Xử lý trang không tìm thấy */}
-          <Route path="*" element={<PageNotFound />} />
+          {/* Thêm các route khác nếu cần */}
         </Route>
       </Routes>
     </BrowserRouter>

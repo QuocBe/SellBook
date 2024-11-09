@@ -1,137 +1,52 @@
-import React, { useState } from "react";
-import { Button, Form, Input, Typography, message, Spin } from "antd";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import Axios
-import { firebaseConfig } from "../../../firebaseConfig"; // Import Firebase configuration
+import React from 'react';
+import { Form, Input, Button, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import '../../assets/style/Pages/Login.scss';
+import { checkAdminCredentials } from '../../service/realtimeDatabaseService';
 
 const { Title } = Typography;
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
-
-const Login = () => {
-  const [loading, setLoading] = useState(false);
+function Login() {
   const navigate = useNavigate();
 
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    try {
-      // Make a POST request to the Firebase API for login
-      const response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`,
-        {
-          email: values.email,
-          password: values.password,
-          returnSecureToken: true,
-        }
-      );
-
-      // Check if the logged-in user exists and get their role
-      const userRoleResponse = await axios.get(`${firebaseConfig.databaseURL}/account.json`);
-      const userRoles = userRoleResponse.data;
-
-      const user = Object.values(userRoles).find(user => user.email === values.email);
-
-      if (user) {
-        message.success("Login successful!");
-        
-        // Navigate based on user role
-        switch (user.role) {
-          case 'admin':
-            navigate("/loginmanager"); // Redirect to LoginManager page
-            break;
-          case 'teacher':
-            navigate("/teacher-dashboard"); // Redirect to Teacher dashboard
-            break;
-          case 'student':
-            navigate("/student-dashboard"); // Redirect to Student dashboard
-            break;
-          case 'supervisor':
-            navigate("/supervisor-dashboard"); // Redirect to Supervisor dashboard
-            break;
-          case 'guest':
-            navigate("/guest-dashboard"); // Redirect to Guest dashboard
-            break;
-          default:
-            navigate("/user-dashboard"); // Redirect to a default user dashboard
-        }
-      } else {
-        message.error("User not found. Please check your email.");
-      }
-
-      console.log("Logged in user:", response.data);
-    } catch (error) {
-      console.error("Login error:", error);
-      message.error("Login failed. Please check your email and password.");
-    } finally {
-      setLoading(false);
+  const onFinish = async (values) => {
+    const isAdmin = await checkAdminCredentials(values.username, values.password);
+    if (isAdmin) {
+      navigate('/admin'); // Điều hướng tới trang Admin
+    } else {
+      alert('Invalid credentials');
     }
   };
 
-  const handleFailure = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return (
-    <Spin
-      spinning={loading}
-      tip="Logging in..."
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className="login-container">
       <Form
-        {...formItemLayout}
-        onFinish={handleSubmit}
-        onFinishFailed={handleFailure}
+        name="login"
+        className="login-form"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
       >
-        <Title level={3} style={{ textAlign: "center" }}>
-          Login
-        </Title>
+        <Title level={2}>Admin Login</Title>
         <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              type: "email",
-              message: "Please input a valid email!",
-            },
-          ]}
+          name="username"
+          rules={[{ required: true, message: 'Please input your Username!' }]}
         >
-          <Input />
+          <Input placeholder="Username" />
         </Form.Item>
         <Form.Item
-          label="Password"
           name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
+          rules={[{ required: true, message: 'Please input your Password!' }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Password" />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Login
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
           </Button>
         </Form.Item>
       </Form>
-    </Spin>
+    </div>
   );
-};
+}
 
 export default Login;
