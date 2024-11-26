@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './Components/Header/Header';
+import Header from './Components/Header/HeaderHome';
 import Footer from './Components/Footer/Footer';
 import HeroSection from './Components/Home/HeroSection'; // Import HeroSection
 import ExploreLibrary from './Components/Home/ExploreLibrary';

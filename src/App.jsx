@@ -4,10 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Import các component cần thiết
 import Layout from './Layout';
 import Home from './Components/Home/Home';
-import Login from './Components/Login/Login';
-import LoginAdd from './Components/Login/LoginAdd';
+import Login from './Components/Login/LoginAccount';
+import AddAccount from './Components/Login/AddAccount';
 import AdminDashboard from './Components/Admin/AdminDashboard'; // Thêm AdminDashboard vào đây
-
 import BookList from './Components/Book/BookList';
 import BookDetails from './Components/Book/BookDetails';
 import Cart from './Components/Cart/CartList';
@@ -19,17 +18,21 @@ import EventsSection from './Components/Home/EventsSection';
 import LatestNewsSection from './Components/Home/LatestNewsSection';
 import GallerySection from './Components/Home/GallerySection';
 import Footer from './Components/Footer/Footer';
+import Profile from './Components/Guest/Profile';
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Route cho trang đăng nhập không có layout */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/loginadd" element={<LoginAdd />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/addaccount" element={<AddAccount />} />
         
         {/* Route cho trang Admin */}
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/guest" element={<Profile />} />
+
 
         {/* Route cho các trang khác sẽ bao gồm Layout */}
         <Route path="/" element={<Layout />}>

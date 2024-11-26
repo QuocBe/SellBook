@@ -27,7 +27,7 @@ function ExploreLibrary() {
           {types.map((type, index) => (
             <div key={index} className="type-item">
               <div className="icon-container">
-                <img src={type.icon} alt={type.label} />
+                
               </div>
               <p>{type.label}</p>
             </div>

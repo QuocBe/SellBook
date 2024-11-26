@@ -1,0 +1,51 @@
+.book-types {
+    text-align: center;
+    margin: 2rem 0;
+  
+    h2 {
+      font-size: 1.8rem;
+      color: #4a2d0e; // Màu chữ của tiêu đề
+      margin-bottom: 1.5rem;
+    }
+  
+    .types-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem; // Khoảng cách giữa các biểu tượng
+      flex-wrap: wrap;
+    }
+  
+    .type-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1rem;
+      color: #4a2d0e; // Màu chữ của nhãn
+    }
+  
+    .icon-container {
+      width: 80px;
+      height: 80px;
+      background-color: #002855;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease; // Hiệu ứng phóng to
+      overflow: hidden;
+  
+      img {
+        width: 50%; // Kích thước biểu tượng ban đầu
+        height: 50%;
+      }
+    }
+  
+    .type-item:hover .icon-container {
+      transform: scale(1.2); // Phóng to khi di chuột
+    }
+  
+    .type-item p {
+      margin-top: 0.5rem;
+    }
+  }
+  
