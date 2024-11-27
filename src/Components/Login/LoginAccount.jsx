@@ -17,12 +17,12 @@ const LoginAccount = () => {
         message.success("Login successful as Admin!");
         localStorage.setItem("userEmail", values.email); // Save email
         localStorage.setItem("userName", "Admin"); // Admin name
-        navigate("/admin"); // Redirect to admin page
+        navigate("/adminlayout"); // Redirect to admin page
       } else if (role === "guest") {
         message.success("Login successful as Guest!");
         localStorage.setItem("userEmail", values.email); // Save email
         localStorage.setItem("userName", values.email.split("@")[0]); // Example: Set userName as email prefix
-        navigate("/"); // Redirect to home page
+        navigate("/guest"); // Redirect to home page
       } else {
         message.error("Invalid credentials!");
       }

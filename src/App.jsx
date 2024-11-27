@@ -7,6 +7,7 @@ import Home from './Components/Home/Home';
 import Login from './Components/Login/LoginAccount';
 import AddAccount from './Components/Login/AddAccount';
 import AdminDashboard from './Components/Admin/AdminDashboard'; // Thêm AdminDashboard vào đây
+import AdminLayout from './Components/Admin/AdminLayout';
 import BookList from './Components/Book/BookList';
 import BookDetails from './Components/Book/BookDetails';
 import Cart from './Components/Cart/CartList';
@@ -19,6 +20,7 @@ import LatestNewsSection from './Components/Home/LatestNewsSection';
 import GallerySection from './Components/Home/GallerySection';
 import Footer from './Components/Footer/Footer';
 import Profile from './Components/Guest/Profile';
+import AdminBooks from './Components/Admin/AdminBooks';
 
 
 function App() {
@@ -30,12 +32,15 @@ function App() {
         <Route path="/addaccount" element={<AddAccount />} />
         
         {/* Route cho trang Admin */}
-        <Route path="/admin" element={<AdminDashboard />} />
+         {/* Route cho trang Admin */}
+         <Route path="/adminlayout" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="adminbooks" element={<AdminBooks />} />
+        </Route>
+
         <Route path="/guest" element={<Profile />} />
-
-
         {/* Route cho các trang khác sẽ bao gồm Layout */}
-        <Route path="/" element={<Layout />}>
+        <Route path="/guest" element={<Layout />}>
           {/* Trang chính (Home) */}
           <Route index element={<Home />} />
 
