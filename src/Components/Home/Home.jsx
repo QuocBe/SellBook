@@ -1,5 +1,9 @@
 import React from 'react';
 import '../../assets/style/Home/HomeSection.scss';
+import Book1 from '../../assets/images/Book1.jpg';
+import Book2 from '../../assets/images/Book2.jpg';
+import Book3 from '../../assets/images/Book3.jpg';
+
 
 const Header = () => {
   return (
@@ -37,19 +41,19 @@ const Header = () => {
   <h2>Featured Books</h2>
   <div className="featured-grid">
     <div className="product-card">
-      <img src="/path-to-book1.jpg" alt="Book 1" />
+      <img src={Book1} alt="Book 1" />
       <h3>Book Title 1</h3>
       <p>$20.00</p>
       <button className="btn">Buy Now</button>
     </div>
     <div className="product-card">
-      <img src="/path-to-book2.jpg" alt="Book 2" />
+      <img src={Book2} alt="Book 2" />
       <h3>Book Title 2</h3>
       <p>$25.00</p>
       <button className="btn">Buy Now</button>
     </div>
     <div className="product-card">
-      <img src="/path-to-book3.jpg" alt="Book 3" />
+      <img src={Book3} alt="Book 3" />
       <h3>Book Title 3</h3>
       <p>$15.00</p>
       <button className="btn">Buy Now</button>
