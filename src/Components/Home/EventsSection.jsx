@@ -3,7 +3,7 @@ import React from 'react';
 function EventsSection() {
   return (
     <div>
-      {da/* Nộidada dung của EventsSection */}
+       <h1>Đây là trang Event</h1>
     </div>
   );
 }

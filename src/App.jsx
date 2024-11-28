@@ -12,6 +12,8 @@ import BookList from './Components/Book/BookList';
 import Cart from './Components/Cart/CartList';
 import Checkout from './Components/Cart/Checkout';
 import AboutSection from './Components/Home/AboutSection';
+import ContactSection from './Components/Home/ContactSection';
+import PublicSection from './Components/Home/PublicSection';
 import ExploreLibrary from './Components/Home/ExploreLibrary';
 import PackagesSection from './Components/Home/PackagesSection';
 import EventsSection from './Components/Home/EventsSection';
@@ -33,14 +35,14 @@ function App() {
         
         {/* Route cho trang Admin */}
          {/* Route cho trang Admin */}
-         <Route path="/adminlayout" element={<AdminLayout />}>
-  <Route path="dashboard" element={<AdminDashboard />} />
-  <Route path="adminbooks">
-    <Route index element={<AdminBooks />} />
-    <Route path="add" element={<BookForm />} />
-    <Route path="edit/:id" element={<BookForm />} />
-  </Route>
-</Route>
+        <Route path="/adminlayout" element={<AdminLayout />}>
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="adminbooks">
+          <Route index element={<AdminBooks />} />
+          <Route path="add" element={<BookForm />} />
+          <Route path="edit/:id" element={<BookForm />} />
+        </Route>
+      </Route>
 
 
         <Route path="/Profileguest" element={<Profile />} />
@@ -51,6 +53,8 @@ function App() {
 
           {/* Các trang của phần Home */}
           <Route path="about" element={<AboutSection />} />
+          <Route path="contact" element={<ContactSection />} />
+          <Route path="publications" element={<PublicSection />} />
           <Route path="explore" element={<ExploreLibrary />} />
           <Route path="packages" element={<PackagesSection />} />
           <Route path="events" element={<EventsSection />} />

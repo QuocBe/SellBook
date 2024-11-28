@@ -1,21 +1,128 @@
-.about-section {
+// Define color variables
+$primary-color: #4caf50;  // Xanh lá chủ đạo
+$secondary-color: #ffffff;  // Màu trắng
+$background-color: #f9f9f9;  // Màu nền nhẹ
+$text-color: #333;  // Màu chữ chính
+$heading-color: #2c3e50;  // Màu tiêu đề
+$accent-color: #f39c12;  // Màu nhấn (cam)
+
+.about-us {
+  font-family: 'Arial', sans-serif;
+  color: $text-color;
+
+  // Header Section
+  &__header {
     text-align: center;
+    background: $primary-color;
+    color: $secondary-color;
     padding: 2rem;
-  
-    h2 {
-      font-size: 2rem;
-      color: #333;
+
+    h1 {
+      font-size: 2.5rem;
+      color: $secondary-color;
     }
-  
     p {
-      color: #666;
-      max-width: 60%;
-      margin: 1rem auto;
-    }
-  
-    .about-image img {
-      max-width: 100%;
-      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: lighten($secondary-color, 20%);
     }
   }
-  
+
+  // Section Styling
+  &__section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background: $background-color;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 2rem;
+      color: $heading-color;
+      margin-bottom: 1rem;
+      text-align: center;
+      border-bottom: 2px solid $accent-color;
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
+      color: $text-color;
+    }
+
+    &.mission-vision {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+
+      .mission, .vision {
+        flex: 1;
+        background: $secondary-color;
+        border: 1px solid lighten($primary-color, 40%);
+        padding: 1.5rem;
+        border-radius: 8px;
+
+        h3 {
+          font-size: 1.5rem;
+          color: $primary-color;
+        }
+
+        p {
+          color: darken($text-color, 10%);
+        }
+      }
+    }
+
+    &.core-values {
+      ul {
+        list-style-type: none;
+        padding: 0;
+
+        li {
+          margin: 1rem 0;
+          color: darken($text-color, 15%);
+          font-size: 1.1rem;
+
+          strong {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+
+    &.our-story {
+      ul {
+        list-style: circle;
+        padding-left: 2rem;
+
+        li {
+          margin: 0.5rem 0;
+          color: $text-color;
+        }
+      }
+    }
+
+    &.contact {
+      text-align: center;
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: $text-color;
+      }
+
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+          color: darken($primary-color, 10%);
+        }
+      }
+    }
+  }
+}
