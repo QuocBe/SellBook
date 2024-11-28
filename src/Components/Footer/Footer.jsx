@@ -18,36 +18,36 @@ function Footer() {
       <div className="footer-top">
         <Row gutter={[16, 16]}>
           <Col span={6}>
-            <h3>VỀ CÔNG TY</h3>
+            <h3>ABOUT US</h3>
             <ul>
-              <li>Giới thiệu công ty</li>
-              <li>Tuyển dụng</li>
-              <li>Chương trình đại lý</li>
-              <li>Chính sách bảo mật</li>
-              <li>Chính sách đổi trả</li>
+              <li>Company Introduction</li>
+              <li>Recruitment</li>
+              <li>Affiliate Program</li>
+              <li>Privacy Policy</li>
+              <li>Return Policy</li>
             </ul>
           </Col>
           <Col span={6}>
-            <h3>TRỢ GIÚP</h3>
+            <h3>HELP</h3>
             <ul>
-              <li>Quy định sử dụng</li>
-              <li>Hướng dẫn mua hàng</li>
-              <li>Phương thức thanh toán</li>
-              <li>Phương thức vận chuyển</li>
-              <li>Ứng dụng đọc ebook</li>
+              <li>Terms of Use</li>
+              <li>Buying Guide</li>
+              <li>Payment Method</li>
+              <li>Shipping Method</li>
+              <li>Ebook Reading App</li>
             </ul>
           </Col>
           <Col span={6}>
-            <h3>TIN TỨC SÁCH</h3>
+            <h3>BOOK NEWS</h3>
             <ul>
-              <li>Tin tức</li>
-              <li>Chân dung</li>
-              <li>Điểm sách</li>
-              <li>Phê bình</li>
+              <li>News</li>
+              <li>Portrait</li>
+              <li>Book Review</li>
+              <li>Criticize</li>
             </ul>
           </Col>
           <Col span={6}>
-            <h3>CHẤP NHẬN THANH TOÁN</h3>
+            <h3>PAYMENT ACCEPTANCE</h3>
             <div className="payment-logos">
               <img src={Visa} alt="Visa" />
               <img src={MasterCard} alt="MasterCard" />
@@ -56,7 +56,7 @@ function Footer() {
               <img src={Cash} alt="Cash" />
               <img src={Card} alt="Card" />
             </div>
-            <h3>ĐỐI TÁC VẬN CHUYỂN</h3>
+            <h3>SHIPPING PARTNERS</h3>
             <div className="partner-logos">
               <img className="partner-logos-img" src={Vinabook} alt="Vinabook" />
               <img className="partner-logos-img" src={VietnamPost} alt="GHN" />
