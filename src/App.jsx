@@ -45,7 +45,7 @@ function App() {
 
         <Route path="/Profileguest" element={<Profile />} />
         {/* Route cho các trang khác sẽ bao gồm Layout */}
-        <Route path="/guest" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           {/* Trang chính (Home) */}
           <Route index element={<Home />} />
 

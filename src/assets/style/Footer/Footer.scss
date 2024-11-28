@@ -1,0 +1,87 @@
+.footer {
+    background-color: #1d1d1d;
+    color: #fff;
+    padding: 30px 50px; // Thêm padding để dịch toàn bộ nội dung sang phải
+    font-size: 14px;
+  
+    .footer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr; // Chia tỷ lệ giống mẫu
+      gap: 30px;
+      justify-content: center; // Dịch cả footer-container sang giữa
+      padding-left: 160px;
+    }
+  
+    .footer-section {
+      &:first-child {
+        padding-left: 90px; // Đẩy phần đầu tiên sang phải
+        
+      }
+  
+      h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+  
+      p,
+      ul {
+        margin: 10px 0;
+        line-height: 1.8;
+      }
+  
+      a {
+        color: #b3b3b3;
+        text-decoration: none;
+        transition: color 0.3s ease;
+  
+        &:hover {
+          color: #fff;
+        }
+      }
+  
+      ul {
+        list-style: none;
+        padding: 0;
+  
+        li {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      border-top: 1px solid #444;
+      padding-top: 15px;
+      color: #b3b3b3;
+    }
+  }
+  
+  // Responsive cho màn hình nhỏ hơn
+  @media (max-width: 768px) {
+    .footer {
+      padding: 20px;
+  
+      .footer-container {
+        grid-template-columns: 1fr; // Chuyển sang dạng cột
+        gap: 20px;
+      }
+  
+      .footer-section {
+        &:first-child {
+          padding-left: 0; // Loại bỏ padding trên màn hình nhỏ
+        }
+  
+        text-align: center;
+      }
+  
+      .footer-bottom {
+        font-size: 10px;
+      }
+    }
+  }
+  
