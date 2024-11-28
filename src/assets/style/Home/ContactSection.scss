@@ -1,0 +1,124 @@
+// Variables
+$primary-color: #4caf50;  // Xanh lá chủ đạo
+$accent-color: #f39c12;  // Màu cam nhấn
+$text-color: #333;
+$bg-color: #f9f9f9;
+
+.contact-us {
+  font-family: 'Arial', sans-serif;
+  color: $text-color;
+
+  &__header {
+    text-align: center;
+    background: $primary-color;
+    color: #fff;
+    padding: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__info,
+  &__form,
+  &__social,
+  &__map {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background: $bg-color;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 1.8rem;
+      color: $primary-color;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__form {
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-color;
+        }
+      }
+
+      textarea {
+        height: 120px;
+        resize: none;
+      }
+    }
+
+    .btn {
+      background: $primary-color;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  &__social {
+    text-align: center;
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+
+      a {
+        color: $primary-color;
+        font-size: 1.2rem;
+        text-decoration: none;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+  &__map {
+    iframe {
+      border: none;
+      border-radius: 8px;
+    }
+  }
+}

@@ -76,14 +76,6 @@ const AboutSection = () => {
           <li>2023: Voted as "Most Loved Book Platform."</li>
         </ul>
       </div>
-
-      {/* Contact Section */}
-      <div className="about-us__section contact">
-        <h2>Contact Us</h2>
-        <p>Email: support@bookbe.com</p>
-        <p>Phone: <a href="tel:+840329554964">+840329554964</a></p>
-        <p>Address: Cong Hoa Garden Building No. 20 Cong Hoa, Ward 12, Tan Binh District, Ho Chi Minh City</p>
-      </div>
     </section>
   );
 };
