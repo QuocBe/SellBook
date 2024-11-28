@@ -75,7 +75,7 @@ const Navbar = () => {
               </span>
               {showDropdown && (
                 <div className="dropdown-menu">
-                  <Link to="/guest" className="dropdown-item">
+                  <Link to="/Profileguest" className="dropdown-item">
                     Your Profile
                   </Link>
                   <Link to="/orders" className="dropdown-item">
