@@ -1,155 +1,255 @@
+// // Variables
+// $primary-color: #4caf50; // Green
+// $secondary-color: #ffffff; // White
+// $text-color: #333;
+// $bg-color: #f9f9f9;
+
+// .home {
+//   font-family: 'Arial', sans-serif;
+
+//   .btn {
+//     background: $primary-color;
+//     color: $secondary-color;
+//     border: none;
+//     font-weight: bold;
+//     border-radius: 5px;
+//     padding: 0.5rem 1rem;
+//     cursor: pointer;
+//     transition: background 0.3s;
+
+//     &:hover {
+//       background: darken($primary-color, 10%);
+//     }
+//   }
+
+//   &__hero {
+//     background: linear-gradient(45deg, $primary-color, darken($primary-color, 10%));
+//     color: $secondary-color;
+//     text-align: center;
+//     padding: 3rem 1rem;
+
+//     .hero-content {
+//       max-width: 800px;
+//       margin: 0 auto;
+
+//       h1 {
+//         font-size: 2.5rem;
+//         margin-bottom: 1rem;
+//       }
+
+//       p {
+//         font-size: 1.2rem;
+//         margin-bottom: 2rem;
+//       }
+
+//       .btn-primary {
+//         background: $secondary-color;
+//         color: $primary-color;
+//         padding: 0.8rem 1.5rem;
+//         border: none;
+//         border-radius: 5px;
+//         cursor: pointer;
+//         font-size: 1rem;
+//         transition: background 0.3s;
+
+//         &:hover {
+//           background: darken($secondary-color, 10%);
+//         }
+//       }
+//     }
+//   }
+
+//   &__featured,
+//   &__about,
+//   &__testimonials,
+//   &__blog,
+//   &__newsletter {
+//     padding: 2rem 1rem;
+//     text-align: center;
+
+//     h2 {
+//       font-size: 2rem;
+//       color: $primary-color;
+//       margin-bottom: 1.5rem;
+//     }
+//   }
+
+//   &__featured {
+//     .featured-grid {
+//       display: flex;
+//       justify-content: center;
+//       gap: 2rem;
+
+//       .product-card {
+//         background: $bg-color;
+//         padding: 1rem;
+//         border: 1px solid lighten($primary-color, 40%);
+//         border-radius: 5px;
+//         text-align: center;
+
+//         img {
+//           max-width: 100px;
+//           margin-bottom: 1rem;
+//         }
+
+//         h3 {
+//           font-size: 1.2rem;
+//           margin-bottom: 0.5rem;
+//         }
+
+//         .btn {
+//           background: $primary-color;
+//           color: $secondary-color;
+//           border: none;
+//           border-radius: 5px;
+//           padding: 0.5rem 1rem;
+//           cursor: pointer;
+//           transition: background 0.3s;
+
+//           &:hover {
+//             background: darken($primary-color, 10%);
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   &__testimonials blockquote {
+//     margin: 1rem auto;
+//     font-style: italic;
+//     color: $text-color;
+
+//     cite {
+//       display: block;
+//       margin-top: 0.5rem;
+//       font-weight: bold;
+//     }
+//   }
+
+//   &__newsletter form {
+//     display: flex;
+//     justify-content: center;
+//     gap: 1rem;
+
+//     input {
+//       padding: 0.8rem;
+//       border: 1px solid #ccc;
+//       border-radius: 5px;
+//       width: 300px;
+//     }
+
+//     .btn-primary {
+//       background: $primary-color;
+//       color: $secondary-color;
+//       border: none;
+//       border-radius: 5px;
+//       padding: 0.8rem 1.5rem;
+//       cursor: pointer;
+//       transition: background 0.3s;
+
+//       &:hover {
+//         background: darken($primary-color, 10%);
+//       }
+//     }
+//   }
+// }
+
 // Variables
-$primary-color: #4caf50; // Green
-$secondary-color: #ffffff; // White
+$primary-color: #333;
+$secondary-color: #fff;
+$accent-color: #d32f2f;
 $text-color: #333;
-$bg-color: #f9f9f9;
+$gray-color: #888;
 
 .home {
-  font-family: 'Arial', sans-serif;
 
-  .btn {
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 2rem;
+  }
+
+  &__products {
+    display: grid;
+    // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
+
+    .product-card {
+      text-align: center;
+      background: $secondary-color;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+        color: $text-color;
+        margin-bottom: 0.5rem;
+      }
+
+      .author {
+        font-size: 0.9rem;
+        color: $gray-color;
+        margin-bottom: 0.5rem;
+      }
+
+      .original-price {
+        text-decoration: line-through;
+        color: $gray-color;
+        font-size: 0.9rem;
+      }
+
+      .price {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: $accent-color;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  .load-more-btn {
+    display: block;
+    margin: 2rem auto;
     background: $primary-color;
     color: $secondary-color;
     border: none;
-    font-weight: bold;
     border-radius: 5px;
-    padding: 0.5rem 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s;
 
     &:hover {
-      background: darken($primary-color, 10%);
+      background: lighten($primary-color, 10%);
     }
   }
+}
 
-  &__hero {
-    background: linear-gradient(45deg, $primary-color, darken($primary-color, 10%));
-    color: $secondary-color;
-    text-align: center;
-    padding: 3rem 1rem;
-
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-
-      h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-      }
-
-      p {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-      }
-
-      .btn-primary {
-        background: $secondary-color;
-        color: $primary-color;
-        padding: 0.8rem 1.5rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background 0.3s;
-
-        &:hover {
-          background: darken($secondary-color, 10%);
-        }
-      }
-    }
+@media (max-width: 768px) {
+  .home__products {
+    grid-template-columns: repeat(2, 1fr); // 2 cột trên màn hình nhỏ
   }
+}
 
-  &__featured,
-  &__about,
-  &__testimonials,
-  &__blog,
-  &__newsletter {
-    padding: 2rem 1rem;
-    text-align: center;
-
-    h2 {
-      font-size: 2rem;
-      color: $primary-color;
-      margin-bottom: 1.5rem;
-    }
-  }
-
-  &__featured {
-    .featured-grid {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-
-      .product-card {
-        background: $bg-color;
-        padding: 1rem;
-        border: 1px solid lighten($primary-color, 40%);
-        border-radius: 5px;
-        text-align: center;
-
-        img {
-          max-width: 100px;
-          margin-bottom: 1rem;
-        }
-
-        h3 {
-          font-size: 1.2rem;
-          margin-bottom: 0.5rem;
-        }
-
-        .btn {
-          background: $primary-color;
-          color: $secondary-color;
-          border: none;
-          border-radius: 5px;
-          padding: 0.5rem 1rem;
-          cursor: pointer;
-          transition: background 0.3s;
-
-          &:hover {
-            background: darken($primary-color, 10%);
-          }
-        }
-      }
-    }
-  }
-
-  &__testimonials blockquote {
-    margin: 1rem auto;
-    font-style: italic;
-    color: $text-color;
-
-    cite {
-      display: block;
-      margin-top: 0.5rem;
-      font-weight: bold;
-    }
-  }
-
-  &__newsletter form {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-
-    input {
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 300px;
-    }
-
-    .btn-primary {
-      background: $primary-color;
-      color: $secondary-color;
-      border: none;
-      border-radius: 5px;
-      padding: 0.8rem 1.5rem;
-      cursor: pointer;
-      transition: background 0.3s;
-
-      &:hover {
-        background: darken($primary-color, 10%);
-      }
-    }
+@media (max-width: 480px) {
+  .home__products {
+    grid-template-columns: 1fr; // 1 cột trên màn hình điện thoại
   }
 }

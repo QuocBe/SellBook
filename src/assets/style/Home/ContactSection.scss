@@ -7,6 +7,7 @@ $bg-color: #f9f9f9;
 .contact-us {
   font-family: 'Arial', sans-serif;
   color: $text-color;
+  width: 100%;
 
   &__header {
     text-align: center;
@@ -21,6 +22,10 @@ $bg-color: #f9f9f9;
     p {
       font-size: 1.2rem;
     }
+  }
+
+  &__info {
+    margin-top: 30px;
   }
 
   &__info,
@@ -121,4 +126,8 @@ $bg-color: #f9f9f9;
       border-radius: 8px;
     }
   }
+}
+
+.contact-us__info {
+  margin-top: 30px;
 }

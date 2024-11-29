@@ -1,4 +1,5 @@
 import React from 'react';
+import "../src/assets/style/template/Global.scss";
 import { Outlet } from 'react-router-dom';
 import Header from './Components/Header/HeaderHome';
 import Footer from './Components/Footer/Footer';

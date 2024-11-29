@@ -9,6 +9,7 @@ $accent-color: #f39c12;  // Màu nhấn (cam)
 .about-us {
   font-family: 'Arial', sans-serif;
   color: $text-color;
+  width: 100%;
 
   // Header Section
   &__header {
@@ -35,6 +36,7 @@ $accent-color: #f39c12;  // Màu nhấn (cam)
     background: $background-color;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
     margin-bottom: 2rem;
 
     h2 {
