@@ -3,7 +3,8 @@ import { Form, Input, InputNumber, Select, Button, Upload, message } from "antd"
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { ref, get, update, push } from "firebase/database";
-import { database } from "../../../firebaseConfig";
+import { database, storage } from "../../../firebaseConfig";
+import { uploadBytesResumable, getDownloadURL, ref as storageRef } from "firebase/storage";
 
 const { Option } = Select;
 
@@ -12,6 +13,7 @@ const BookForm = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // Nhận ID sách từ URL nếu chỉnh sửa
   const [fileList, setFileList] = useState([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -44,8 +46,30 @@ const BookForm = () => {
   }, [id, form, navigate]);
 
   const handleSave = async (values) => {
+    setUploading(true);
     try {
-      const imageUrl = fileList[0]?.url || null;
+      let imageUrl = null;
+      if (fileList.length > 0) {
+        const file = fileList[0].originFileObj;
+        const storageReference = storageRef(storage, `Books/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageReference, file);
+
+        imageUrl = await new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            null,
+            (error) => {
+              reject(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                resolve(downloadURL);
+              });
+            }
+          );
+        });
+      }
+
       const updatedValues = { ...values, image: imageUrl };
 
       if (id) {
@@ -61,21 +85,13 @@ const BookForm = () => {
       navigate("/adminlayout/adminbooks");
     } catch (error) {
       message.error("Failed to save book.");
+    } finally {
+      setUploading(false);
     }
   };
 
-  const handleUpload = ({ file }) => {
-    if (file.status === "done") {
-      const uploadedFile = {
-        uid: file.uid,
-        name: file.name,
-        status: file.status,
-        url: URL.createObjectURL(file.originFileObj),
-      };
-      setFileList([uploadedFile]);
-    } else if (file.status === "removed") {
-      setFileList([]);
-    }
+  const handleUpload = ({ file, fileList }) => {
+    setFileList(fileList.slice(-1));
   };
 
   return (
@@ -83,10 +99,10 @@ const BookForm = () => {
       <h2>{id ? "Edit Book" : "Add Book"}</h2>
       <Form form={form} onFinish={handleSave} layout="vertical">
         <Form.Item name="name" label="Book Name" rules={[{ required: true }]}>
-          <Input />
+          <Input placeholder="Enter book name (e.g., Harry Potter)" />
         </Form.Item>
         <Form.Item name="price" label="Price" rules={[{ required: true }]}>
-          <InputNumber style={{ width: "100%" }} />
+          <InputNumber style={{ width: "100%" }} placeholder="Enter price (e.g., 20.99)" />
         </Form.Item>
         <Form.Item name="category" label="Category" rules={[{ required: true }]}>
           <Select placeholder="Select a category">
@@ -99,19 +115,19 @@ const BookForm = () => {
           </Select>
         </Form.Item>
         <Form.Item name="language" label="Language">
-          <Input />
+          <Input placeholder="Enter book language (e.g., English, Vietnamese)" />
         </Form.Item>
         <Form.Item name="description" label="Description">
-          <Input.TextArea rows={4} />
+          <Input.TextArea rows={4} placeholder="Enter a short description of the book" />
         </Form.Item>
         <Form.Item name="size" label="Size">
-          <Input />
+          <Input placeholder="Enter size (e.g., 20x30cm)" />
         </Form.Item>
         <Form.Item name="pages" label="Pages">
-          <InputNumber min={1} style={{ width: "100%" }} />
+          <InputNumber min={1} style={{ width: "100%" }} placeholder="Enter number of pages" />
         </Form.Item>
         <Form.Item name="textBy" label="Text By">
-          <Input />
+          <Input placeholder="Enter author's name (e.g., J.K. Rowling)" />
         </Form.Item>
         <Form.Item label="Upload Image">
           <Upload
@@ -130,7 +146,7 @@ const BookForm = () => {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={uploading}>
             {id ? "Update Book" : "Add Book"}
           </Button>
           <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/adminlayout/adminbooks")}>

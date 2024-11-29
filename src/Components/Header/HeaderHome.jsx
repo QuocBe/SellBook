@@ -9,24 +9,19 @@ const Navbar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [userName, setUserName] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname === "/guest"; // Cập nhật kiểm tra trang chủ
 
   useEffect(() => {
-    // Fetch username from localStorage after login
+    const currentPath = location.pathname.split("/")[2] || "home"; // Lấy phần sau "/guest/"
+    setActiveLink(currentPath);
+
     const storedUserName = localStorage.getItem("userName");
     setUserName(storedUserName);
-  }, []);
+  }, [location.pathname]);
 
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-  };
-
-  const toggleDropdown = () => {
-    setShowDropdown((prevState) => !prevState);
-  };
+  const toggleDropdown = () => setShowDropdown((prevState) => !prevState);
 
   const handleLogout = () => {
-    // Clear user data and reload page
     localStorage.removeItem("userName");
     localStorage.removeItem("userRole");
     setUserName(null);
@@ -38,19 +33,21 @@ const Navbar = () => {
     <header className={`navbar ${isHomePage ? "home-page" : "other-page"}`}>
       <div className="container">
         <div className="logo">
-          <img src={logo} alt="Book Store Logo" />
+          <Link to="/guest">
+            <img src={logo} alt="Book Store Logo" />
+          </Link>
         </div>
         <nav className="nav">
           <ul className="nav-links">
             {["home", "about", "events", "publications", "contact"].map((link) => (
               <li key={link}>
-                <a
-                  href={`#${link}`}
+                <Link
+                  to={`/guest/${link === "home" ? "" : link}`} // Đảm bảo liên kết đúng
                   className={activeLink === link ? "active" : ""}
-                  onClick={() => handleLinkClick(link)}
+                  onClick={() => setActiveLink(link)}
                 >
-                  {link.charAt(0).toUpperCase() + link.slice(1)}
-                </a>
+                  {link.charAt(0).toUpperCase() + link.slice(1)} {/* Viết hoa chữ cái đầu */}
+                </Link>
               </li>
             ))}
           </ul>
@@ -65,31 +62,26 @@ const Navbar = () => {
           <div className="icons">
             {userName ? (
               <div className="user-dropdown">
-              <span
-                onClick={toggleDropdown}
-                style={{
-                  fontWeight: "bold",
-                }}
-              >
-                {userName}
-              </span>
-              {showDropdown && (
-                <div className="dropdown-menu">
-                  <Link to="/Profileguest" className="dropdown-item">
-                    Your Profile
-                  </Link>
-                  <Link to="/orders" className="dropdown-item">
-                    Your Order
-                  </Link>
-                  <span onClick={handleLogout} className="dropdown-item">
-                    Logout
-                  </span>
-                </div>
-              )}
-            </div>
+                <span onClick={toggleDropdown} style={{ fontWeight: "bold" }}>
+                  {userName}
+                </span>
+                {showDropdown && (
+                  <div className="dropdown-menu">
+                    <Link to="/Profileguest" className="dropdown-item">
+                      Your Profile
+                    </Link>
+                    <Link to="/orders" className="dropdown-item">
+                      Your Order
+                    </Link>
+                    <span onClick={handleLogout} className="dropdown-item">
+                      Logout
+                    </span>
+                  </div>
+                )}
+              </div>
             ) : (
-              <Link to="/login">
-                <SearchOutlined />
+              <Link to="/login" className="login-link">
+                Login
               </Link>
             )}
             <ShoppingCartOutlined />
