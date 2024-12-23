@@ -3,16 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "../../assets/style/Header/HeaderHome.scss";
 import logo from "../../assets/images/Logo_BookBe.png";
+import { ref, get } from "firebase/database";
+import { database } from "../../../firebaseConfig";
 
 const Navbar = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("home");
   const [userName, setUserName] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const isHomePage = location.pathname === "/guest"; // Cập nhật kiểm tra trang chủ
+  const [searchQuery, setSearchQuery] = useState(""); // Quản lý giá trị tìm kiếm
+  const [searchResults, setSearchResults] = useState([]); // Lưu kết quả tìm kiếm
+  const isHomePage = location.pathname === "/guest";
 
   useEffect(() => {
-    const currentPath = location.pathname.split("/")[2] || "home"; // Lấy phần sau "/guest/"
+    const currentPath = location.pathname.split("/")[2] || "home";
     setActiveLink(currentPath);
 
     const storedUserName = localStorage.getItem("userName");
@@ -29,6 +33,24 @@ const Navbar = () => {
     window.location.reload();
   };
 
+  const handleSearch = async () => {
+    try {
+      const snapshot = await get(ref(database, "Books")); // Lấy dữ liệu từ Firebase
+      if (snapshot.exists()) {
+        const booksData = snapshot.val();
+        const booksArray = Object.values(booksData);
+        const filteredBooks = booksArray.filter((book) =>
+          book.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setSearchResults(filteredBooks); // Cập nhật kết quả tìm kiếm
+      } else {
+        setSearchResults([]);
+      }
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
+
   return (
     <header className={`navbar ${isHomePage ? "home-page" : "other-page"}`}>
       <div className="container">
@@ -42,11 +64,11 @@ const Navbar = () => {
             {["home", "about", "events", "publications", "contact"].map((link) => (
               <li key={link}>
                 <Link
-                  to={`/guest/${link === "home" ? "" : link}`} // Đảm bảo liên kết đúng
+                  to={`/guest/${link === "home" ? "" : link}`}
                   className={activeLink === link ? "active" : ""}
                   onClick={() => setActiveLink(link)}
                 >
-                  {link.charAt(0).toUpperCase() + link.slice(1)} {/* Viết hoa chữ cái đầu */}
+                  {link.charAt(0).toUpperCase() + link.slice(1)}
                 </Link>
               </li>
             ))}
@@ -54,8 +76,13 @@ const Navbar = () => {
         </nav>
         <div className="search-cart">
           <div className="search-box">
-            <input type="text" placeholder="Search..." />
-            <button>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button onClick={handleSearch}>
               <SearchOutlined />
             </button>
           </div>
@@ -87,6 +114,16 @@ const Navbar = () => {
             <ShoppingCartOutlined />
           </div>
         </div>
+        {/* Hiển thị kết quả tìm kiếm */}
+        {searchResults.length > 0 && (
+          <div className="search-results">
+            <ul>
+              {searchResults.map((book, index) => (
+                <li key={index}>{book.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </header>
   );

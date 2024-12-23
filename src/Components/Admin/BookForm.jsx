@@ -1,38 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  Button,
-  Upload,
-  message,
-} from "antd";
+import { Form, Input, InputNumber, Select, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
-import { ref, get, update, push } from "firebase/database";
+import { ref as databaseRef, get, update, push } from "firebase/database";
 import { database, storage } from "../../../firebaseConfig";
-import {
-  uploadBytesResumable,
-  getDownloadURL,
-  ref as storageRef,
-} from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL, ref as storageRef } from "firebase/storage";
 
 const { Option } = Select;
 
 const BookForm = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { id } = useParams(); // Nhận ID sách từ URL nếu chỉnh sửa
-  const [fileList, setFileList] = useState([]); // Quản lý danh sách file
+  const { id } = useParams();
+  const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
 
-  // Fetch dữ liệu sách nếu đang chỉnh sửa
   useEffect(() => {
     if (id) {
       const fetchBook = async () => {
         try {
-          const snapshot = await get(ref(database, `Books/${id}`));
+          const snapshot = await get(databaseRef(database, `Books/${id}`));
           if (snapshot.exists()) {
             const bookData = snapshot.val();
             form.setFieldsValue(bookData);
@@ -51,6 +38,7 @@ const BookForm = () => {
             navigate("/adminlayout/adminbooks");
           }
         } catch (error) {
+          console.error("Failed to fetch book details:", error);
           message.error("Failed to fetch book details.");
         }
       };
@@ -58,48 +46,54 @@ const BookForm = () => {
     }
   }, [id, form, navigate]);
 
-  // Xử lý upload ảnh
   const handleUploadChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
 
-  // Xử lý lưu thông tin
   const handleSave = async (values) => {
     setUploading(true);
     try {
       const uploadPromises = fileList.map((file) => {
         if (file.originFileObj) {
-          const storagePath = storageRef(storage, `Books/${file.name}`);
+          const storagePath = storageRef(storage, `Books/${file.originFileObj.name}`);
           const uploadTask = uploadBytesResumable(storagePath, file.originFileObj);
 
           return new Promise((resolve, reject) => {
             uploadTask.on(
               "state_changed",
-              null,
+              (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Upload is ${progress}% done`);
+              },
               (error) => {
-                console.error("Upload failed:", error);
+                console.error("Upload error:", error);
                 reject(error);
               },
               async () => {
-                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                resolve(downloadURL);
+                try {
+                  const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                  resolve(downloadURL);
+                } catch (error) {
+                  console.error("Error getting download URL:", error);
+                  reject(error);
+                }
               }
             );
           });
         } else {
-          return Promise.resolve(file.url); // URL đã có sẵn
+          return Promise.resolve(file.url);
         }
       });
-      console.log(uploadPromises)
+
       const imageUrls = await Promise.all(uploadPromises);
       const updatedValues = { ...values, images: imageUrls };
 
       if (id) {
-        await update(ref(database, `Books/${id}`), updatedValues);
+        await update(databaseRef(database, `Books/${id}`), updatedValues);
         message.success("Book updated successfully!");
       } else {
-        const newBookRef = push(ref(database, "Books"));
-        await update(newBookRef, updatedValues);
+        const newBookRef = push(databaseRef(database, "Books"));
+        await update(databaseRef(database, `Books/${newBookRef.key}`), updatedValues);
         message.success("Book added successfully!");
       }
       navigate("/adminlayout/adminbooks");
@@ -119,16 +113,9 @@ const BookForm = () => {
           <Input placeholder="Enter book name (e.g., Harry Potter)" />
         </Form.Item>
         <Form.Item name="price" label="Price" rules={[{ required: true }]}>
-          <InputNumber
-            style={{ width: "100%" }}
-            placeholder="Enter price (e.g., 20.99)"
-          />
+          <InputNumber style={{ width: "100%" }} placeholder="Enter price (e.g., 20.99)" />
         </Form.Item>
-        <Form.Item
-          name="category"
-          label="Category"
-          rules={[{ required: true }]}
-        >
+        <Form.Item name="category" label="Category" rules={[{ required: true }]}>
           <Select placeholder="Select a category">
             <Option value="Children">Children</Option>
             <Option value="History">History</Option>
@@ -138,66 +125,46 @@ const BookForm = () => {
             <Option value="Comics">Comics</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="language" label="Language">
-          <Input placeholder="Enter book language (e.g., English, Vietnamese)" />
+        <Form.Item name="language" label="Language" rules={[{ required: true }]}>
+          <Input placeholder="Enter book language (e.g., English)" />
         </Form.Item>
-        <Form.Item name="description" label="Description">
-          <Input.TextArea
-            rows={4}
-            placeholder="Enter a short description of the book"
-          />
+        <Form.Item name="pages" label="Number of Pages" rules={[{ required: true }]}>
+          <InputNumber style={{ width: "100%" }} placeholder="Enter number of pages" />
         </Form.Item>
         <Form.Item name="size" label="Size">
-          <Input placeholder="Enter size (e.g., 20x30cm)" />
+          <Input placeholder="Enter book size (e.g., 8.5 x 11 inches)" />
         </Form.Item>
-        <Form.Item name="pages" label="Pages">
-          <InputNumber
-            min={1}
-            style={{ width: "100%" }}
-            placeholder="Enter number of pages"
-          />
-        </Form.Item>
-        <Form.Item name="textBy" label="Text By">
-          <Input placeholder="Enter author's name (e.g., J.K. Rowling)" />
+        <Form.Item name="content" label="Content">
+          <Input.TextArea rows={4} placeholder="Enter book content description" />
         </Form.Item>
         <Form.Item label="Upload Images">
           <Upload
-            listType="picture-card"
             fileList={fileList}
             onChange={handleUploadChange}
             beforeUpload={(file) => {
-              const isValid =
-                file.type === "image/jpeg" || file.type === "image/png";
+              const isValid = file.type === "image/jpeg" || file.type === "image/png";
               if (!isValid) {
                 message.error("Only JPG/PNG files are allowed.");
+                return Upload.LIST_IGNORE;
               }
               const isLt2M = file.size / 1024 / 1024 < 2;
               if (!isLt2M) {
                 message.error("Image must be smaller than 2MB.");
+                return Upload.LIST_IGNORE;
               }
-              return isValid && isLt2M;
+              return true;
             }}
-            maxCount={3}
+            maxCount={5}
+            multiple
           >
-            {fileList.length < 3 && (
-              <div>
-                <UploadOutlined />
-                <div>Upload</div>
-              </div>
-            )}
+            <Button icon={<UploadOutlined />}>Select Files</Button>
           </Upload>
-          <p style={{ color: "#aaa" }}>
-            You can upload up to 3 images (JPG/PNG, less than 2MB each)
-          </p>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={uploading}>
             {id ? "Update Book" : "Add Book"}
           </Button>
-          <Button
-            style={{ marginLeft: "10px" }}
-            onClick={() => navigate("/adminlayout/adminbooks")}
-          >
+          <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/adminlayout/adminbooks")}>
             Cancel
           </Button>
         </Form.Item>

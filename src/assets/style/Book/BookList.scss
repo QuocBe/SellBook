@@ -1,0 +1,78 @@
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .book-card {
+    width: 250px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .book-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .book-image {
+    position: relative;
+  }
+  
+  .book-image img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .bestseller-badge,
+  .discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .discount-badge {
+    background-color: green;
+    right: 10px;
+    left: auto;
+  }
+  
+  .book-details {
+    padding: 15px;
+  }
+  
+  .book-details h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .book-pricing {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: #999;
+  }
+  
+  .discount-price,
+  .price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
